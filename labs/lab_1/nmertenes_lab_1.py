@@ -1,4 +1,5 @@
 # Python version of Matrix Multiplication
+# Last Updated: 1/4/2022
 
 def printMatrix(m):
     # iterate over rows
@@ -25,9 +26,3 @@ def matrixMult(A, B):
     else:
         # raise error if inner dimensions do not match
         raise ValueError(f'Number of columns in first matrix ({len(A[0])}) do not equal number of rows in second matrix ({len(B)})')
-
-def main(A, B):
-    print(matrixMult(A,B))
-
-if __name__ == '__main__':
-    main()
