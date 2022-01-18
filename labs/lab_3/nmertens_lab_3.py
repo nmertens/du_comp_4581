@@ -6,8 +6,6 @@
 
 import os
 import csv
-import matplotlib.pyplot as plt
-import seaborn as sns
 import random
 from time import time
 
@@ -43,18 +41,6 @@ def factor(pq):
             q = (pq/i)
             return p, q
 
-def plot(bits, times):
-    ''' Plots data in simple scatter plot
-    '''
-    plt.figure(figsize = (15, 7))
-    sns.set_context('talk')
-    trend_plot = sns.lineplot(x = bits, y = times, marker = 'o', size = 10)
-    sns.despine();
-    plt.xticks(bits)
-    trend_plot.set_xlabel('Bits', fontsize = 20)
-    trend_plot.set_ylabel('Time to Factor (ms)', fontsize = 20)
-    plt.show()
-
 def saveData(bits, times):
     ''' Saves data to csv file for use in curve fitter
     '''
@@ -74,8 +60,6 @@ def main():
         t2 = time()
         totalTime = round((t2-t1)*1000, 1)
         times.append(totalTime)
-
-    plot(bits, times) # display results in a plot
 
     if not os.path.exists('nbit_times.csv'): # check if .csv file exists
         saveData(bits, times)
