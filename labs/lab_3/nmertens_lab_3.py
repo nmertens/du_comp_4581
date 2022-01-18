@@ -53,7 +53,7 @@ def plot(bits, times):
     plt.xticks(bits)
     trend_plot.set_xlabel('Bits', fontsize = 20)
     trend_plot.set_ylabel('Time to Factor (ms)', fontsize = 20)
-    plt.show(trend_plot)
+    plt.show()
 
 def saveData(bits, times):
     ''' Saves data to csv file for use in curve fitter
