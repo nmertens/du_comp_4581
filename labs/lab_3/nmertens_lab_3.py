@@ -45,7 +45,7 @@ def factor(pq):
     for i in range(2, pq):
         if (pq % i) == 0:
             p = i
-            q = (pq/i)
+            q = int(pq/i)
             return p, q
 
 def saveData(bits, times):
