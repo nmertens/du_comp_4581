@@ -31,6 +31,13 @@ def nBitPrime(n):
             next
         prime = isPrime(integer)
     return integer
+    
+    # Professor's code
+    # while True:
+    #     p = int(random.random() * (2**n))
+    #     if p >= 2 and isPrime(p):
+    #         return p
+
 
 def factor(pq):
     ''' Factors a number generated from two n-bit prime numbers
