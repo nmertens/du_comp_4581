@@ -97,3 +97,9 @@ adjacencyList = loadGraph('edges.txt')
 test = distanceDistribution(adjacencyList)
 for key, value in test.items():
     print(key, value)
+
+##### Comment Section #####
+# To what extent does this network statisfy the small world phenomenon?
+# The network created here statifies the small world problem since most of connections between nodes are at 6 or below.
+# While there are some connections between nodes beyond 6 degrees of separation the large majority of connections were
+# at or below 6.
