@@ -1,10 +1,11 @@
 # Breadth First Search for Small World Problem
 # Last edited: 1/27/2022
 
-from collections import defaultdict, Counter
+from collections import defaultdict, Counter, OrderedDict
 
 def loadGraph(edgeFilename):
-
+    ''' Load in edge data and sort into adjacency list
+    '''
     with open(edgeFilename) as f:
         lines = f.read().strip().split("\n")
 
@@ -12,7 +13,9 @@ def loadGraph(edgeFilename):
 
     for line in lines:
         ls = line.split(" ")
+        # Make sure to append the pair both ways (ex. 15 to 33 & 33 to 15)
         adjacencyList[ls[0]].append(ls[1])
+        adjacencyList[ls[1]].append(ls[0]) 
     
     return adjacencyList
 
@@ -53,6 +56,8 @@ class MyQueue(object):
             print('Queue is Empty!')
 
 def BFS(G, s):
+    ''' Breadth-First Search algorithm
+    '''
     visited = {}
     for key in G.keys():
         visited[key] = float('inf')
@@ -67,15 +72,15 @@ def BFS(G, s):
         s = queue.dequeue()
         distance = visited[s]
         for neighbour in G[s]:
-            if neighbour in visited.keys():
-                if visited[neighbour] == float('inf'):
-                    queue.enqueue(neighbour)
-                    visited[neighbour] = int(distance + 1)
+            if visited[neighbour] == float('inf'):
+                queue.enqueue(neighbour)
+                visited[neighbour] = int(distance + 1)
     
     return visited
 
 def distanceDistribution(G):
-    
+    ''' Get the overall distribution of distances between vertices
+    '''
     frequencies = defaultdict(list)
     
     for key in G.keys():
@@ -95,11 +100,12 @@ def distanceDistribution(G):
 # Test case
 adjacencyList = loadGraph('edges.txt')
 test = distanceDistribution(adjacencyList)
-for key, value in test.items():
+test2 = dict(OrderedDict(sorted(test.items())))
+for key, value in test2.items():
     print(key, value)
 
 ##### Comment Section #####
-# To what extent does this network statisfy the small world phenomenon?
+# To what extent does this network satisfy the small world phenomenon?
 # The network created here statifies the small world problem since most of connections between nodes are at 6 or below.
-# While there are some connections between nodes beyond 6 degrees of separation the large majority of connections were
-# at or below 6.
+# To be more specific, 98% of all the distances in the sample Facebook data were at or below 6 edges away from any starting node. 
+# Clearly, 98% is not 100%, but it is very, very close. Therefore, this network satisfies the small world phenomenon.
