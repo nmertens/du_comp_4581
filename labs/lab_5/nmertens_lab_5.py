@@ -19,8 +19,8 @@ class MyStack():
         ''' remove an element from the stack
         '''
         if self.empty():
-            print('Error: Popping from an empty stack')
-            # raise Exception("Cannot pop from an empty stack")
+            print('Error: Popping from an empty stack!')
+            # raise Exception("Cannot pop from an empty stack!")
         else:
             return self.elements.pop()
     
@@ -33,8 +33,8 @@ class MyStack():
         ''' look at the top of the stack
         '''
         if self.empty():
-            print('Error: Stack is empty')
-            # raise Exception("No value: empty stack")
+            print('Error: Stack is empty!')
+            # raise Exception("No value: empty stack!")
         return self.elements[0]
 
 class MyQueue():
@@ -58,7 +58,8 @@ class MyQueue():
         if(self.empty() != True):
             return self.queue.pop()
         else:
-            print('Error: Queue is Empty!')
+            print('Error: Queue is empty!')
+            # raise Exception('Error: Queue is empty!')
 
     def empty(self):
         ''' Check if the queue is empty 
@@ -71,7 +72,8 @@ class MyQueue():
         if(self.empty() != True):
             return self.queue[-1]
         else:
-            print('Queue is Empty!')
+            print('Error: Queue is empty!')
+            # raise Exception('Error: Queue is empty!')
 
 # Testing code for stack
 s = MyStack()
