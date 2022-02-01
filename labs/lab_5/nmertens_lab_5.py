@@ -59,7 +59,7 @@ class MyQueue():
         if type(item) == self.type:
             self.queue.insert(0, item)
         else:
-            print(f'Error: item needs to be of type {str(self.type)}')
+            print(f'Error: item needs to be of type {self.type}')
             # raise Expection(f'Error: item needs to be of type {self.type}')
 
     def dequeue(self):
@@ -104,7 +104,7 @@ q = MyQueue(int)
 print(q.empty())
 q.enqueue(5)
 q.enqueue(8)
-q.enqueue('Hello')
+# q.enqueue('Hello') # should generate an error
 print(q.dequeue())
 q.enqueue(3)
 print(q.empty())
