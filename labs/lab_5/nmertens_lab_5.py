@@ -1,10 +1,11 @@
 from collections import deque
 
 class MyStack():
-    def __init__(self):
+    def __init__(self, type):
         ''' initialize an empty stack object
         '''
         self.elements = []
+        self.type = type
 
     def __str__(self):
         stackString = ' '.join(str(i) for i in self.elements)
@@ -13,7 +14,11 @@ class MyStack():
     def push(self, item):
         ''' add an element to the stack
         '''
-        self.elements.append(item)
+        if type(item) == self.type:
+            self.elements.append(item)
+        else:
+            print(f'Error: item needs to be of type {self.type}')
+            # raise Expection(f'Error: item needs to be of type {self.type}')
 
     def pop(self):
         ''' remove an element from the stack
@@ -38,10 +43,11 @@ class MyStack():
         return self.elements[0]
 
 class MyQueue():
-    def __init__(self):
+    def __init__(self, type):
         ''' initialize an empty queue object
         '''
         self.queue = deque()
+        self.type = type
 
     def __str__(self):
         queueString = ' '.join(str(i) for i in self.queue)
@@ -50,7 +56,11 @@ class MyQueue():
     def enqueue(self, item):
         ''' Add item to the end of the queue 
         '''
-        self.queue.insert(0, item)
+        if type(item) == self.type:
+            self.queue.insert(0, item)
+        else:
+            print(f'Error: item needs to be of type {str(self.type)}')
+            # raise Expection(f'Error: item needs to be of type {self.type}')
 
     def dequeue(self):
         ''' Remove an item from the start of the queue 
@@ -76,7 +86,8 @@ class MyQueue():
             # raise Exception('Error: Queue is empty!')
 
 # Testing code for stack
-s = MyStack()
+# Add in check for data type to be int
+s = MyStack(int)
 print(s.empty())
 s.push(5)
 s.push(8)
@@ -89,10 +100,11 @@ print(s.pop())
 print(s.pop()) # should generate an error
 
 # Testing code for Queue
-q = MyQueue()
+q = MyQueue(int)
 print(q.empty())
 q.enqueue(5)
 q.enqueue(8)
+q.enqueue('Hello')
 print(q.dequeue())
 q.enqueue(3)
 print(q.empty())
