@@ -1,3 +1,6 @@
+# Stack and Queue class objects
+# Last modified: 2/1/2022
+
 from collections import deque
 
 class MyStack():
