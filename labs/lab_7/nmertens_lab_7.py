@@ -15,7 +15,7 @@ def DACcoins(coins, amount):
         # Calculate the optimal for currentCoin
             currentMin = DACcoins(coins, amount-currentCoin) + 1
             # Keep the best
-            minCoins = min(minCoins, currentMin) 
+            minCoins   = min(minCoins, currentMin) 
 
     return minCoins
 
@@ -23,23 +23,23 @@ def DACcoins(coins, amount):
 def DPcoins(coins, amount):
     # Create the intial tables
     numCoins = [None for i in range(amount + 1)]
-    topCoin = [None for i in range(amount + 1)]
+    topCoin  = [None for i in range(amount + 1)]
 
     # Fill in the base case(s)
     numCoins[0] = 0
-    topCoin[0] = 0
+    topCoin[0]  = 0
 
     # Fill in the rest of the table
     for change in range(1, amount+1):
 
         numCoins[change] = change # worst case is all pennies
-        topCoin[change] = change
+        topCoin[change]  = change
 
         # only include coins that are less that total change
         for coin in [c for c in coins if c <= numCoins[change]]: 
             if numCoins[change-coin] + 1 < numCoins[change]:
-               numCoins[change] = numCoins[change-coin]+1
-               topCoin[change] = coin
+               numCoins[change] = numCoins[change-coin] + 1
+               topCoin[change]  = coin
 
     # Perform the traceback to print result
     for i in range(numCoins[amount]):
