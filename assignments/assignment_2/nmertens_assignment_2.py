@@ -1,9 +1,14 @@
+# DAC Stock Problem; find the best stock to buy, when to buy it, when to sell it, and the profit
+# Last updated: 2/18/2022
+# For this version of the DAC I didn't end up using the change in price. However, I did check the processing time for this version the old DAC algorithm
+# and the two were matched in terms of processing time.
+
 import csv
 
 def getData(ticker):
     ticker = ticker
-    date = []
-    price = []
+    date   = []
+    price  = []
 
     with open('./nyse/prices-split-adjusted.csv') as csvfile:
         readerObject = csv.reader(csvfile)
@@ -23,16 +28,14 @@ def getNames():
         readerObject = csv.reader(csvfile)
         next(readerObject)
         for row in readerObject:
-            key = row[0]
-            val = row[1]
-            stockNames[key] = val
+            stockNames[row[0]] = row[1]
     
     return stockNames
 
 def MSSDAC(A, low=0, high=None):
     if high == None:
         high = len(A) - 1
-    # Base case
+    # Base case: this will return the values needed to find when to buy and sell stock
     if low == high:
         return(0, A[low], A[high])
     # Divide
@@ -40,22 +43,43 @@ def MSSDAC(A, low=0, high=None):
     # Conquer
     leftProfit , leftMin ,  leftMax = MSSDAC(A, low, mid)
     rightProfit, rightMin, rightMax = MSSDAC(A, mid+1, high)
-    # Combine
     middleProfit = rightMax - leftMin
+    # Combine
     maxProfit = max(leftProfit, rightProfit, middleProfit)
-
     return maxProfit, min(leftMin, rightMin), max(leftMax, rightMax)
 
-# ticker, date, price = getData('ABT')
+def bestStock():
+    stockNames = getNames()
+
+    # initialize values
+    bestProfit = 0
+    bestTicker = None
+    bestStart  = None
+    bestEnd    = None
+
+    # loop through the tickers
+    for key in stockNames.keys():
+        ticker, date, price = getData(key)
+        if len(price) == 0:
+            next
+        else:
+            profit, minVal, maxVal = MSSDAC(price)
+            # if new bestProfit found update values
+            if profit > bestProfit:
+                bestProfit = profit
+                bestTicker = ticker
+                bestStart  = date[price.index(minVal)]
+                bestEnd    = date[price.index(maxVal)]
+
+    print(f'Best stock to buy: "{stockNames[bestTicker]}" on {bestStart} and sell on {bestEnd} with a profit of {bestProfit}')
+
+
+# Initial test case
+# ticker, date, price = getData('AAPL')
 # profit, min, max = MSSDAC(price)
 # print(profit)
 
-# ticker1, date1, price1 = getData('AAPL')
-# profit1, min1, max1 = MSSDAC(price1)
-# print(profit1)
-
-stockNames = getNames()
-print(stockNames)
+bestStock()
 
 ## Dynamic Programing Version ##
 
@@ -75,14 +99,11 @@ print(stockNames)
 #             maxPrice = float(price[i])
 #             maxPrice_id = i - 1
 #         maxProf = max(maxProf, maxPrice - minPrice)
-#     return (maxProf, minPrice_id, maxPrice_i
+#     return (maxProf, minPrice_id, maxPrice_id)
 
-# t1 = time()
-# profit2, min, max = maxProfit(price)
-# t2 = time()
-# print("Max Profit:",profit2," in time: ",round((t2-t1)*1000,1),"ms")
-
-# print(date[min], date[max])
+# profitDP, minDP, maxDP = maxProfit(price)
+# print("Max Profit: ",profitDP," in time: ",round((t2-t1)*1000,1),"ms")
+# print(date[minDP], date[maxDP])
 
 ## Old DAC ###
 # def MSSDAC(A, low=0, high=None):
