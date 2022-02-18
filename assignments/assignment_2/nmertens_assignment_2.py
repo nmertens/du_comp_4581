@@ -1,5 +1,4 @@
 import csv
-from time import time
 
 def getData(ticker):
     ticker = ticker
@@ -16,57 +15,47 @@ def getData(ticker):
     
     return ticker, date, price
 
-    # change = [None for i in range(len(date))]
+def getNames():
 
-    # change[0] = 0
-    # for i in range(1,len(price)):
-    #     change[i] = float(price[i]) - float(price[i-1])
+    stockNames = dict()
+
+    with open('./nyse/securities.csv') as csvfile:
+        readerObject = csv.reader(csvfile)
+        next(readerObject)
+        for row in readerObject:
+            key = row[0]
+            val = row[1]
+            stockNames[key] = val
     
-    # return date, price, change
+    return stockNames
 
 def MSSDAC(A, low=0, high=None):
     if high == None:
         high = len(A) - 1
-
     # Base case
     if low == high:
         return(0, A[low], A[high])
-        # if A[low] > 0: return A[low]
-        # else: return 0
     # Divide
     mid = (low+high)//2
     # Conquer
-
     leftProfit , leftMin ,  leftMax = MSSDAC(A, low, mid)
     rightProfit, rightMin, rightMax = MSSDAC(A, mid+1, high)
+    # Combine
+    middleProfit = rightMax - leftMin
+    maxProfit = max(leftProfit, rightProfit, middleProfit)
 
-    # maxLeft = MSSDAC(A, low, mid)
-    # maxRight = MSSDAC(A, mid+1, high)
+    return maxProfit, min(leftMin, rightMin), max(leftMax, rightMax)
 
-    maxProfit = max(leftProfit, rightProfit, rightMax - leftMin)
-    return (maxProfit, min(leftMin, rightMin), max(leftMax, rightMax))
+# ticker, date, price = getData('ABT')
+# profit, min, max = MSSDAC(price)
+# print(profit)
 
-    # # Combine
-    # maxLeft2Center = left2Center = 0
-    # for i in range(mid, low-1, -1):
-    #     left2Center += A[i]
-    #     maxLeft2Center = max(left2Center, maxLeft2Center)
-    # maxRight2Center = right2Center = 0
-    # for i in range(mid + 1, high+1):
-    #     right2Center += A[i]
-    #     maxRight2Center = max(right2Center, maxRight2Center)
-    # maxProfit = max(maxLeft, maxRight, maxLeft2Center+maxRight2Center)
-    # # maxProfit = max(leftProfit, rightProfit, maxLeft2Center+maxRight2Center)
-    # return maxProfit
+# ticker1, date1, price1 = getData('AAPL')
+# profit1, min1, max1 = MSSDAC(price1)
+# print(profit1)
 
-date, price, change = getData('AAPL')
-
-t1 = time()
-profit, min, max = MSSDAC(price)
-t2 = time()
-print("Max Profit:",profit," in time: ",round((t2-t1)*1000,1),"ms")
-print(date[price.index(min)])
-print(date[price.index(max)])
+stockNames = getNames()
+print(stockNames)
 
 ## Dynamic Programing Version ##
 
@@ -94,3 +83,28 @@ print(date[price.index(max)])
 # print("Max Profit:",profit2," in time: ",round((t2-t1)*1000,1),"ms")
 
 # print(date[min], date[max])
+
+## Old DAC ###
+# def MSSDAC(A, low=0, high=None):
+#     if high == None:
+#         high = len(A) - 1
+#     # Base case
+#     if low == high:
+#         if A[low] > 0: return A[low]
+#         else: return 0
+#     # Divide
+#     mid = (low+high)//2
+#     # Conquer
+#     maxLeft = MSSDAC(A, low, mid)
+#     maxRight = MSSDAC(A, mid+1, high)
+#     # Combine
+#     maxLeft2Center = left2Center = 0
+#     for i in range(mid, low-1, -1):
+#         left2Center += A[i]
+#         maxLeft2Center = max(left2Center, maxLeft2Center)
+#     maxRight2Center = right2Center = 0
+#     for i in range(mid + 1, high+1):
+#         right2Center += A[i]
+#         maxRight2Center = max(right2Center, maxRight2Center)
+#     maxProfit = max(maxLeft, maxRight, maxLeft2Center+maxRight2Center)
+#     return maxProfit
