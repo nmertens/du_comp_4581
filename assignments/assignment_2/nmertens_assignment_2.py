@@ -76,8 +76,8 @@ def bestStock():
 
 # Initial test case
 # ticker, date, price = getData('AAPL')
-# profit, min, max = MSSDAC(price)
-# print(profit)
+# profit, minVal, maxVal = MSSDAC(price)
+# print(f'{ticker} Profit: {profit} buy on day: {price.index(minVal)} ({date[price.index(minVal)]}) sell on day: {price.index(maxVal)} ({date[price.index(maxVal)]})')
 
 bestStock()
 
