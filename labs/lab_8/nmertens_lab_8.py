@@ -40,7 +40,7 @@ def parenStr(traceback, i, j):
         print(f'(A{i})', end = '')
         return
     
-    # table index to parenthesis placcement
+    # table index for parenthesis placement
     k = traceback[i][j]
 
     # Get the optimal breakdown based on traceback table
