@@ -50,6 +50,12 @@ def DPcoins(coins, amount):
             print(topCoin[nextIndex])
             nextIndex = nextIndex - topCoin[nextIndex]
 
+    # Professor's code
+    # i = amount
+    # while i != 0:
+    #     print(topCoin[i])
+    #     i = i - topCoin[i]
+
     return numCoins[amount]
 
 
