@@ -1,3 +1,6 @@
+# Backtracking for graph coloring
+# Last updated: 3/8/2022
+
 # Stack ADT with list implementation from Lab 5
 class MyStack(object):
     def __init__ (self, type): # Creates an empty list
