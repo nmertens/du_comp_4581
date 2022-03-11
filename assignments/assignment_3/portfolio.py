@@ -49,10 +49,13 @@ def optimizeInvestments(total, state, cost, value):
     for i in range(n, 0, -1):
         if result <= 0:
             break
+        
+        # If the total changes it means that the current row is included
+        #   in the optimal solution
         if result == table[i-1][traceTotal]:
             continue
         else:
-            # This item is included.
+            # This item is included
             print(f'{state[i-1]} (Cost: {cost[i-1]}, Return: {value[i-1]})')
             # Since this cost is included deduct the value from the result
             result = result - value[i-1]
